@@ -7,9 +7,9 @@ Uma api simples para cadastrar cervejas utilizando [nodejs](https://github.com/n
 
 ## Rodando app
 
- 1 - Ter o mongodb instalado na máquina
- 2 - Ter o nodejs e npm instalado na máquina
-
+ * Ter o mongodb instalado na máquina
+ * Ter o nodejs e npm instalado na máquina
+ 
 rodar esse comando dentro do diretório da aplicação:
 ```
 npm start ou node app.js
