@@ -10,17 +10,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// Passo 0 - conexão com mongo
-//docker 
-//var mongoaddr = 'mongodb://' + process.env.MONGO_PORT_27017_TCP_ADDR + ':27017/beersapi';
-var mongoaddr = 'mongodb://localhost:27017/beersapi';
+var mongoaddr = 'mongodb://' + process.env.MONGO_PORT_27017_TCP_ADDR + ':27017/beersapi';
 console.log(mongoaddr);
-//mongo.connect(mongoaddr);
 
 mongo.connect(mongoaddr, { useMongoClient: true })
 
  
-//Passo 1 - Esquema da collection do Mongo
+
 var beerSchema = mongo.Schema({
 	name : { type: String, required: true }, 
     brand : { type: String, required: true },
@@ -29,7 +25,7 @@ var beerSchema = mongo.Schema({
     create_at: { type: Date, default: Date.now },
 });
 
-//Passo 2 - Beer da aplicação
+
 var Beer = mongo.model('Beer', beerSchema);
 
 app.get('/v1/beers', function(req, res){
@@ -62,7 +58,7 @@ app.get("/v1/beers/:brand?", function (req, res) {
 	});
 });
 
-//POST - Adiciona um registro
+
 app.post("/v1/beers", function (req, res) {
 	var register = new Beer({
 		'name' : req.body.name,
@@ -76,8 +72,7 @@ app.post("/v1/beers", function (req, res) {
 			res.end();
 		}
     });
-    res.send(register)
-    // res.status('201').location('/beers/' + register._id)
+      res.status('201').location('/beers/' + register._id)
 	res.end();
 });
 
@@ -91,7 +86,6 @@ app.put("/v1/beers/:id", function (req, res) {
   });
 });
 
-
 app.delete("/v1/beers/:id", function (req, res) {
     Beer.findByIdAndRemove(req.params.id, req.body, function (err, post) {
        if (err) return next(err);
@@ -99,7 +93,6 @@ app.delete("/v1/beers/:id", function (req, res) {
      });
 });
 
-//Porta de escuta do servidor
 app.listen(port, function() {
 	console.log('App listen on: ' + port);
 });
